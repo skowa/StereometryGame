@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeFloat : MonoBehaviour
+public class MenuCubeBehaviour : MonoBehaviour
 {
     public float tilt;
 

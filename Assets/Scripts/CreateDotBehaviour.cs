@@ -1,22 +1,28 @@
 ﻿using UnityEngine;
 
-public class InnerCircle : MonoBehaviour {
-float theta_scale = 0.01f;        //Set lower to add more points
-    int size; //Total number of points in circle
-    float radius = 0.3f;
+public class CreateDotBehaviour : MonoBehaviour {
+	float theta_scale = 0.01f; 
+    int size; 
+    float radius = 0.03f;
     LineRenderer lineRenderer;
- 
+
+    private void OnMouseUpAsButton()
+    {
+        CreateButtonsHelper.Action = ActionType.Dot;
+
+        var okButton = GameObject.Find("OK");
+        okButton.GetComponent<Renderer>().enabled = true;
+        okButton.GetComponent<Collider2D>().enabled = true;
+    }
+
     void Awake()
     {
         float sizeValue = (2.0f * Mathf.PI) / theta_scale;
         size = (int)sizeValue;
         size++;
-
-        GameObject line = new GameObject();
-        line.transform.SetParent(transform);
-        line.AddComponent<LineRenderer>();
-
-        lineRenderer = line.GetComponent<LineRenderer>();
+        lineRenderer = gameObject.AddComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
+        lineRenderer.material.color = Color.white;
         lineRenderer.startWidth = 0.05f;
         lineRenderer.endWidth = 0.05f;
         lineRenderer.positionCount = size;
@@ -33,7 +39,7 @@ float theta_scale = 0.01f;        //Set lower to add more points
             float y = radius * Mathf.Sin(theta);
             x += gameObject.transform.position.x;
             y += gameObject.transform.position.y;
-            pos = new Vector3(x, y, 1);
+            pos = new Vector3(x, y, 0);
             lineRenderer.SetPosition(i, pos);
         }
     }

@@ -1,30 +1,43 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class  TouchBehaviour: MonoBehaviour
+public class TouchBehaviour : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        // if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 100.0f))
             {
                 if (hit.collider.transform != null)
                 {
-                    if (hit.collider.transform.gameObject.name == "New Game Object")
+                    GameObject gameObject = hit.collider.transform.gameObject;
+
+                    if (gameObject.tag == "Edge")
                     {
-                        print("yes");
+                        if (CreateButtonsHelper.Action == ActionType.Dot)
+                        {
+                            GameObject parentObject = gameObject.transform.parent.gameObject;
+
+                            CreateButtonsHelper.SelectedObjects.Add(parentObject);
+
+                            var renderer = parentObject.GetComponent<Renderer>();
+                            renderer.material.color = Color.magenta;
+                        }
+                    }
+
+                    if (gameObject.tag == "Dot")
+                    {
+                        if (CreateButtonsHelper.Action == ActionType.Line)
+                        {
+                            CreateButtonsHelper.SelectedObjects.Add(gameObject);
+
+                            var renderer = gameObject.GetComponent<Renderer>();
+                            renderer.material.color = Color.magenta;
+                        }
                     }
                 }
             }

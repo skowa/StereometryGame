@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class InnerDot : MonoBehaviour {
-	float theta_scale = 0.01f;        //Set lower to add more points
+public class CreateCircleBehaviour : MonoBehaviour {
+    float theta_scale = 0.01f;        //Set lower to add more points
     int size; //Total number of points in circle
-    float radius = 0.03f;
+    float radius = 0.3f;
     LineRenderer lineRenderer;
  
     void Awake()
@@ -13,7 +11,14 @@ public class InnerDot : MonoBehaviour {
         float sizeValue = (2.0f * Mathf.PI) / theta_scale;
         size = (int)sizeValue;
         size++;
-        lineRenderer = gameObject.AddComponent<LineRenderer>();
+
+        GameObject line = new GameObject();
+        line.transform.SetParent(transform);
+        line.AddComponent<LineRenderer>();
+
+        lineRenderer = line.GetComponent<LineRenderer>();
+        lineRenderer.material = new Material(Shader.Find("Unlit/Color"));
+        lineRenderer.material.color = Color.white;
         lineRenderer.startWidth = 0.05f;
         lineRenderer.endWidth = 0.05f;
         lineRenderer.positionCount = size;
@@ -30,7 +35,7 @@ public class InnerDot : MonoBehaviour {
             float y = radius * Mathf.Sin(theta);
             x += gameObject.transform.position.x;
             y += gameObject.transform.position.y;
-            pos = new Vector3(x, y, 0);
+            pos = new Vector3(x, y, 1);
             lineRenderer.SetPosition(i, pos);
         }
     }
