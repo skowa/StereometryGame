@@ -1,7 +1,16 @@
 ﻿using UnityEngine;
 
-public class TouchBehaviour : MonoBehaviour
+public class GameModeCameraBehaviour : MonoBehaviour
 {
+    private void Start()
+    {
+        GameObject gameObject = Instantiate(Resources.Load<GameObject>(Game.PathToPrefabs + Game.CurrentLevelData.Type));
+        if (gameObject != null)
+        {
+            gameObject.name = Game.CurrentLevelData.Type.ToString();
+        }
+    }
+
     void Update()
     {
         // if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
@@ -31,7 +40,7 @@ public class TouchBehaviour : MonoBehaviour
 
                     if (gameObject.tag == "Dot")
                     {
-                        if (CreateButtonsHelper.Action == ActionType.Line)
+                        if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check)
                         {
                             CreateButtonsHelper.SelectedObjects.Add(gameObject);
 

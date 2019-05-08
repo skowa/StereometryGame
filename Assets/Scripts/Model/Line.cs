@@ -1,16 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 
+[Serializable]
 public class Line 
 {
-    public Line(Vector3 startPoint, Vector3 endPoint)
+    public Line()
+    {
+        
+    }
+
+    public Line(SerializableVector3 startPoint, SerializableVector3 endPoint)
     {
         StartPoint = startPoint;
         EndPoint = endPoint;
     }
 
-    public Vector3 StartPoint { get; set; }
+    public SerializableVector3 StartPoint { get; set; }
 
-    public Vector3 EndPoint { get; set; }
+    public SerializableVector3 EndPoint { get; set; }
 }

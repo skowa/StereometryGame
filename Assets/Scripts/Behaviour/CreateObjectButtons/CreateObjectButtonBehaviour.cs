@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CreateButtonBehaviour : MonoBehaviour
+public class CreateObjectButtonBehaviour : MonoBehaviour
 {
     private void OnMouseUpAsButton()
     {

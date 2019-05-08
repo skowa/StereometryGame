@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GameModeButtons : MonoBehaviour {
 
@@ -9,7 +7,7 @@ public class GameModeButtons : MonoBehaviour {
         switch (gameObject.name)
         {
             case "back":
-                Application.LoadLevel("Game");
+                Application.LoadLevel("Levels");
                 break;
         }
     }

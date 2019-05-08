@@ -14,9 +14,8 @@ public class CreateParallelLineBehaviour : MonoBehaviour
 		 transform.position.x + 0.23f, transform.position.y + 0.36f, 0);
 	}
 
-	private void CreateLine(float x1, float y1, float z1, float x2, float y2, float z2)
-	{
-        GameObject line = _objectCreator.CreateLineObject(new Vector3(x1, y1, z1), new Vector3(x2, y2, z2), Color.white);
-        line.transform.SetParent(transform);
+    private void CreateLine(float x1, float y1, float z1, float x2, float y2, float z2)
+    {
+        _objectCreator.CreateLineObjectForButtons(new Vector3(x1, y1, z1), new Vector3(x2, y2, z2), transform, Color.white);
     }
 }
