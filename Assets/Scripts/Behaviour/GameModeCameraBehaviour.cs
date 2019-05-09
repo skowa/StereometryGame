@@ -8,6 +8,9 @@ public class GameModeCameraBehaviour : MonoBehaviour
         if (gameObject != null)
         {
             gameObject.name = Game.CurrentLevelData.Type.ToString();
+            Game.Actions.Clear();
+            CreateButtonsHelper.Action = ActionType.None;
+            CreateButtonsHelper.SelectedObjects.Clear();
         }
     }
 
@@ -27,8 +30,14 @@ public class GameModeCameraBehaviour : MonoBehaviour
 
                     if (gameObject.tag == "Edge")
                     {
-                        if (CreateButtonsHelper.Action == ActionType.Dot)
+                        if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
                         {
+                            if (CreateButtonsHelper.Action == ActionType.ParallelLine 
+                                && CreateButtonsHelper.SelectedObjects.Count == 1 && CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+                            {
+                                return;
+                            }
+
                             GameObject parentObject = gameObject.transform.parent.gameObject;
 
                             CreateButtonsHelper.SelectedObjects.Add(parentObject);
@@ -40,8 +49,16 @@ public class GameModeCameraBehaviour : MonoBehaviour
 
                     if (gameObject.tag == "Dot")
                     {
-                        if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check)
+                        if (CreateButtonsHelper.Action == ActionType.Line 
+                            || CreateButtonsHelper.Action == ActionType.Check
+                            || CreateButtonsHelper.Action == ActionType.ParallelLine)
                         {
+                            if (CreateButtonsHelper.Action == ActionType.ParallelLine
+                                && CreateButtonsHelper.SelectedObjects.Count == 1 && CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
+                            {
+                                return;
+                            }
+
                             CreateButtonsHelper.SelectedObjects.Add(gameObject);
 
                             var renderer = gameObject.GetComponent<Renderer>();

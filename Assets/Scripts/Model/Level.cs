@@ -11,6 +11,8 @@ public class Level
 
     public int Number { get; set; }
 
+    public string Description { get; set; }
+
     public ShapeType Type { get; set; }
 
     public List<Line> Lines { get; set; }
@@ -25,5 +27,6 @@ public class Level
 [Serializable]
 public enum ShapeType
 {
-    Cube
+    Cube,
+    Tetrahedron
 }

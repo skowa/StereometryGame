@@ -29,7 +29,8 @@ public class CreateButtonsHelper
                     Line firstLine = new Line(firstLineRenderer.GetPosition(0), firstLineRenderer.GetPosition(1));
                     Line secondLine = new Line(secondLineRenderer.GetPosition(0), secondLineRenderer.GetPosition(1));
 
-                    creator.CreateDotBetweenLines(firstLine, secondLine, shape.transform, Resources.Load<Material>(Game.PathToDotsMaterial));
+                    GameObject dot = creator.CreateDotBetweenLines(firstLine, secondLine, shape.transform, Resources.Load<Material>(Game.PathToDotsMaterial));
+                    Game.Actions.Add(dot);
 
                     shape.transform.rotation = rotation;
                 }
@@ -47,7 +48,39 @@ public class CreateButtonsHelper
                     Vector3 start = SelectedObjects[0].transform.position;
                     Vector3 end = SelectedObjects[1].transform.position;
 
-                    creator.CreateLongLineObject(start, end, shape.transform, Resources.Load<Material>(Game.PathToLinesMaterial), 5);
+                    GameObject line = creator.CreateLongLineObject(start, end, shape.transform, Resources.Load<Material>(Game.PathToLinesMaterial), 5);
+                    Game.Actions.Add(line);
+
+                    shape.transform.rotation = rotation;
+                }
+
+                Clear();
+
+                break;
+            case ActionType.ParallelLine:
+                if (SelectedObjects.Count == 2)
+                {
+                    var shape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
+                    Quaternion rotation = shape.transform.rotation;
+                    shape.transform.localRotation = Quaternion.identity;
+
+                    LineRenderer line;
+                    Vector3 dot;
+                    if (SelectedObjects[0].tag == "Edge")
+                    {
+                        line = SelectedObjects[0].transform.GetComponent<LineRenderer>();
+                        dot = SelectedObjects[1].transform.position;
+                    }
+                    else
+                    {
+                        dot = SelectedObjects[0].transform.position;
+                        line = SelectedObjects[1].transform.GetComponent<LineRenderer>();
+                    }
+
+                    GameObject parallelLine = creator.CreateParallelLineThroughDot(
+                        new Line(line.GetPosition(0), line.GetPosition(1)), dot, shape.transform,
+                        Resources.Load<Material>(Game.PathToLinesMaterial));
+                    Game.Actions.Add(parallelLine);
 
                     shape.transform.rotation = rotation;
                 }
@@ -76,7 +109,11 @@ public class CreateButtonsHelper
                         if (maxLevelSolved == Game.CurrentLevelData.Number)
                         {
                             PlayerPrefs.SetInt("level", ++maxLevelSolved);
+                            Game.Actions.Clear();
                         }
+                        
+                        GameObject.Find(Game.CurrentLevelData.Type.ToString()).SetActive(false);
+                        Resources.FindObjectsOfTypeAll<GameObject>().First(go => go.name == "RightAnswerWindow").SetActive(true);
                     }
                 }
 
@@ -119,5 +156,6 @@ public enum ActionType
     None,
     Dot,
     Line,
+    ParallelLine,
     Check
 }

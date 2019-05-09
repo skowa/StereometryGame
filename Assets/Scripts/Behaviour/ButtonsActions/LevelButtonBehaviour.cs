@@ -34,7 +34,7 @@ public class LevelButtonBehaviour : MonoBehaviour
         int levelNumber;
         if (int.TryParse(gameObject.name.Substring(5), out levelNumber))
         {
-            if (levelNumber <= currentLevel)
+            if (levelNumber <= currentLevel && levelNumber <= Game.MaxLevel)
             {
                 Game.FillLevelData(levelNumber);
                 SceneManager.LoadScene("Game");

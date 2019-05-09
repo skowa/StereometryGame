@@ -2,7 +2,79 @@
 <Levels>
   <Level>
     <Number>1</Number>
+    <Type>Tetrahedron</Type>
+    <Description>Construct the cross section of a tetrahedron by a plane passing through three given points: E, F and K</Description>
+    <Lines/>
+    <Vertices>
+      <SerializableVector3>
+        <x>-0.72</x>
+        <y>-2</y>
+        <z>-0.72</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>1.32</x>
+        <y>-0.4</y>
+        <z>1.44</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>1.56</x>
+        <y>-1.2</y>
+        <z>-1.26</z>
+      </SerializableVector3>
+    </Vertices>
+    <Answer>
+      <SerializableVector3>
+        <x>0.44</x>
+        <y>-0.1</y>
+        <z>0.48</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.52</x>
+        <y>-0.3</y>
+        <z>-0.42</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.04</x>
+        <y>-0.5</y>
+        <z>-0.6</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>-0.24</x>
+        <y>-0.5</y>
+        <z>-0.24</z>
+      </SerializableVector3>
+    </Answer>
+    <Letters>
+      <Letter>
+        <Name>F</Name>
+        <Position>
+          <x>-0.32</x>
+          <y>-0.5</y>
+          <z>-0.29</z>
+        </Position>
+      </Letter>
+      <Letter>
+        <Name>E</Name>
+        <Position>
+          <x>0.49</x>
+          <y>-0.06</y>
+          <z>0.5</z>
+        </Position>
+      </Letter>
+      <Letter>
+        <Name>K</Name>
+        <Position>
+          <x>0.56</x>
+          <y>-0.3</y>
+          <z>-0.43</z>
+        </Position>
+      </Letter>
+    </Letters>
+  </Level>
+  <Level>
+    <Number>2</Number>
     <Type>Cube</Type>
+    <Description>Construct the cross section of a cube by a plane passing through three given points: T, U and V</Description>
     <Lines/>
     <Vertices>
       <SerializableVector3>
@@ -71,6 +143,82 @@
           <x>0.53</x>
           <y>-0.3</y>
           <z>-0.5</z>
+        </Position>
+      </Letter>
+    </Letters>
+  </Level>
+  <Level>
+    <Number>3</Number>
+    <Type>Cube</Type>
+    <Description>Construct the cross section of a cube by a plane passing through three given points: P, K and M</Description>
+    <Lines/>
+    <Vertices>
+      <SerializableVector3>
+        <x>0.7</x>
+        <y>-2</y>
+        <z>1.5</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.6</x>
+        <y>2</y>
+        <z>-1.5</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>1.5</x>
+        <y>2</y>
+        <z>0.3</z>
+      </SerializableVector3>
+    </Vertices>
+    <Answer>
+      <SerializableVector3>
+        <x>0.23333333</x>
+        <y>-0.5</y>
+        <z>0.5</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.2</x>
+        <y>0.5</y>
+        <z>-0.5</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.5</x>
+        <y>0.5</y>
+        <z>0.1</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>-0.2666675</x>
+        <y>-0.5</y>
+        <z>-0.5</z>
+      </SerializableVector3>
+      <SerializableVector3>
+        <x>0.4999985</x>
+        <y>0.07142377</y>
+        <z>0.5</z>
+      </SerializableVector3>
+    </Answer>
+    <Letters>
+      <Letter>
+        <Name>P</Name>
+        <Position>
+          <x>0.2</x>
+          <y>-0.53</y>
+          <z>0.53</z>
+        </Position>
+      </Letter>
+      <Letter>
+        <Name>K</Name>
+        <Position>
+          <x>0.17</x>
+          <y>0.59</y>
+          <z>-0.5</z>
+        </Position>
+      </Letter>
+      <Letter>
+        <Name>M</Name>
+        <Position>
+          <x>0.53</x>
+          <y>0.59</y>
+          <z>0.06</z>
         </Position>
       </Letter>
     </Letters>
