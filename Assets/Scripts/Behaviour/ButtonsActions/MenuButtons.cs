@@ -3,9 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
-    public GameObject settingsScreen;
-    public GameObject cube;
-
     void OnMouseUpAsButton()
     {
         if (!PlayerPrefs.HasKey("level"))
@@ -28,11 +25,8 @@ public class MenuButtons : MonoBehaviour
             case "button":
                 SceneManager.LoadScene("Levels");
                 break;
-            case "Settings":
-                settingsScreen.SetActive(true);
-                cube.SetActive(false);
-                transform.parent.gameObject.SetActive(false);
-
+            case "Profile":
+                SceneManager.LoadScene("Profile");
                 break;
             default:
                 break;

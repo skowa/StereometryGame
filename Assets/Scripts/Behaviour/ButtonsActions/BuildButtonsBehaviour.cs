@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class BuildButtonsBehaviour : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class BuildButtonsBehaviour : MonoBehaviour
         if (gameObject.name != "rotate")
         {
             var okButton = GameObject.Find("OK");
-            okButton.GetComponent<Renderer>().enabled = true;
+            okButton.GetComponent<Image>().enabled = true;
             okButton.GetComponent<Collider2D>().enabled = true;
         }
     }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreateButtonsHelper
 {
@@ -123,7 +124,7 @@ public class CreateButtonsHelper
         }
 
         var okButton = GameObject.Find("OK");
-        okButton.GetComponent<Renderer>().enabled = false;
+        okButton.GetComponent<Image>().enabled = false;
         okButton.GetComponent<Collider2D>().enabled = false;
     }
 

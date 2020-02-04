@@ -16,7 +16,7 @@ public class GameModeCameraBehaviour : MonoBehaviour
 
     void Update()
     {
-        // if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
+        //if ((Input.touchCount > 0) && (Input.GetTouch(0).phase == TouchPhase.Began))
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             RaycastHit hit;
