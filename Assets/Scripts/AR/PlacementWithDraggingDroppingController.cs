@@ -14,7 +14,7 @@ public class PlacementWithDraggingDroppingController : MonoBehaviour
 
     private GameObject placedObject;
 
-    private Vector2 touchPosition = default;
+    private Vector2 touchPosition;
 
     private ARRaycastManager arRaycastManager;
 
@@ -62,7 +62,15 @@ public class PlacementWithDraggingDroppingController : MonoBehaviour
 
             if (placedObject == null)
             {
-                placedObject = Instantiate(placedPrefab, hitPose.position + offset, hitPose.rotation);
+	            placedObject = Instantiate(Resources.Load<GameObject>($"{Game.PathToPrefabs}AR{Game.CurrentLevelData.Type}"), hitPose.position + offset, hitPose.rotation);
+	            if (gameObject != null)
+	            {
+		            gameObject.name = Game.CurrentLevelData.Type.ToString();
+		            Game.Actions.Clear();
+		            CreateButtonsHelper.Action = ActionType.None;
+		            CreateButtonsHelper.SelectedObjects.Clear();
+	            }
+              //  placedObject = Instantiate(placedPrefab, hitPose.position + offset, hitPose.rotation);
             }
             else
             {

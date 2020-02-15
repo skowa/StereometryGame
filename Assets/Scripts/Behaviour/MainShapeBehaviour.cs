@@ -2,7 +2,7 @@
 
 public class MainShapeBehaviour : MonoBehaviour
 {
-    private float _rotSpeed = 3;
+    private float _rotSpeed = 30;
     private ObjectCreator _objectCreator;
     Vector2 _lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
 
@@ -17,7 +17,9 @@ public class MainShapeBehaviour : MonoBehaviour
     private void OnMouseDrag()
     {
         float rotX = Input.GetAxis("Mouse X") * _rotSpeed * Mathf.Deg2Rad;//-(_lastAxis.x - Input.mousePosition.x) * _rotSpeed * Mathf.Deg2Rad;//
+       // float rotX = -(_lastAxis.x - Input.mousePosition.x) * _rotSpeed * Mathf.Deg2Rad;//
         float rotY = Input.GetAxis("Mouse Y") * _rotSpeed * Mathf.Deg2Rad;//-(_lastAxis.y - Input.mousePosition.y) * _rotSpeed * Mathf.Deg2Rad;//
+        //float rotY = -(_lastAxis.y - Input.mousePosition.y) * _rotSpeed * Mathf.Deg2Rad;//
         _lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         transform.Rotate(Vector3.up, -rotX);
         transform.Rotate(Vector3.right, rotY);
