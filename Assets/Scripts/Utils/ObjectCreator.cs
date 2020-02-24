@@ -75,6 +75,7 @@ public class ObjectCreator
         text.name = "Letter" + letter;
         text.transform.SetParent(transform);
         text.transform.localPosition += new Vector3(letter.Position.x, letter.Position.y, letter.Position.z);
+        text.tag = "Letter";
     }
 
     private GameObject CreateLongLineObjectCore(List<Func<float, float>> equations, Transform transform, Material material, float parameter)

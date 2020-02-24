@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Edge
   - Dot
+  - Letter
   layers:
   - Default
   - TransparentFX

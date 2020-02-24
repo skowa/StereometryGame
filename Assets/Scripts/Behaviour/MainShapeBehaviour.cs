@@ -4,15 +4,34 @@ public class MainShapeBehaviour : MonoBehaviour
 {
     private float _rotSpeed = 30;
     private ObjectCreator _objectCreator;
-    Vector2 _lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+    private Vector2 _lastAxis;
+    private readonly float _distance = 10f;
+    private GameObject _playerCamera;
+    private GameObject[] _letters;
 
     void Start ()
 	{
+		_lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         _objectCreator = new ObjectCreator();
 
-        CreateLevel();
+        if (Game.MainShape == null)
+        {
+	        CreateLevel();
+        }
+
 		transform.Rotate(-8, -12, 0.5f);
+		
+		_playerCamera = GameObject.Find("Main Camera");
+		_letters = GameObject.FindGameObjectsWithTag("Letter");
 	}
+
+    private void Update()
+    {
+        foreach (var letter in _letters)
+        {
+		    letter.transform.rotation = new Quaternion(0.0f, _playerCamera.transform.rotation.y, 0.0f, _playerCamera.transform.rotation.w);
+        }
+    }
 
     private void OnMouseDrag()
     {

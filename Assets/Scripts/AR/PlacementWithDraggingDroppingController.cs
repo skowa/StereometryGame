@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 
 [RequireComponent(typeof(ARRaycastManager))]
@@ -22,7 +21,12 @@ public class PlacementWithDraggingDroppingController : MonoBehaviour
 
     private static List<ARRaycastHit> hits = new List<ARRaycastHit>();
 
-    private Vector3 offset = new Vector3(0, 0.5f, 0);
+    private Vector3 offset = new Vector3(0, 0.35f, 0);
+
+    private void Start()
+    {
+	    Game.IsAR = true;
+    }
 
     private void Awake()
     {
@@ -42,11 +46,50 @@ public class PlacementWithDraggingDroppingController : MonoBehaviour
                 RaycastHit hitObject;
                 if (Physics.Raycast(ray, out hitObject))
                 {
-                    PlacementObject placementObject = hitObject.transform.GetComponent<PlacementObject>();
-                    if (placementObject != null)
-                    {
-                        onTouchHold = true;
-                    }
+	                if (hitObject.transform.tag == "Edge")
+	                {
+		                if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
+		                {
+			                if (CreateButtonsHelper.Action == ActionType.ParallelLine
+			                    && CreateButtonsHelper.SelectedObjects.Count == 1 && CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+			                {
+				                return;
+			                }
+
+			                GameObject parentObject = hitObject.transform.parent.gameObject;
+
+			                CreateButtonsHelper.SelectedObjects.Add(parentObject);
+
+			                var renderer = parentObject.GetComponent<Renderer>();
+			                renderer.material.color = Color.magenta;
+		                }
+	                }
+	                else if (hitObject.transform.tag == "Dot")
+	                {
+		                if (CreateButtonsHelper.Action == ActionType.Line
+		                    || CreateButtonsHelper.Action == ActionType.Check
+		                    || CreateButtonsHelper.Action == ActionType.ParallelLine)
+		                {
+			                if (CreateButtonsHelper.Action == ActionType.ParallelLine
+			                    && CreateButtonsHelper.SelectedObjects.Count == 1 && CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
+			                {
+				                return;
+			                }
+
+			                CreateButtonsHelper.SelectedObjects.Add(gameObject);
+
+			                var renderer = hitObject.transform.GetComponent<Renderer>();
+			                renderer.material.color = Color.magenta;
+		                }
+	                }
+                    else
+	                {
+		                PlacementObject placementObject = hitObject.transform.GetComponent<PlacementObject>();
+		                if (placementObject != null)
+		                {
+			                onTouchHold = true;
+		                }
+	                }
                 }
             }
 
@@ -58,19 +101,29 @@ public class PlacementWithDraggingDroppingController : MonoBehaviour
 
         if (arRaycastManager.Raycast(touchPosition, hits, UnityEngine.XR.ARSubsystems.TrackableType.PlaneWithinPolygon))
         {
-            Pose hitPose = hits[0].pose;
-
+	        Pose hitPose = hits[0].pose;
             if (placedObject == null)
             {
-	            placedObject = Instantiate(Resources.Load<GameObject>($"{Game.PathToPrefabs}AR{Game.CurrentLevelData.Type}"), hitPose.position + offset, hitPose.rotation);
-	            if (gameObject != null)
-	            {
-		            gameObject.name = Game.CurrentLevelData.Type.ToString();
-		            Game.Actions.Clear();
-		            CreateButtonsHelper.Action = ActionType.None;
+	            placedObject = Game.MainShape;
+
+                if (placedObject != null)
+                {
+                    placedObject.SetActive(true);
+
+                    var placedObjectShape = placedObject.transform.GetChild(0).gameObject;
+                    placedObjectShape.transform.position = hitPose.position + offset;
+                    placedObjectShape.transform.rotation = hitPose.rotation;
+                    placedObject.transform.localScale = new Vector3(0.16f, 0.1875f, 0.16f);
+                    placedObjectShape.AddComponent<PlacementObject>();
+                    foreach (var lineRenderer in placedObjectShape.transform.GetComponentsInChildren<LineRenderer>())
+                    {
+	                    lineRenderer.widthMultiplier = 0.4f;
+                    }
+
+                    Destroy(placedObjectShape.GetComponent<MainShapeBehaviour>());
+                    CreateButtonsHelper.Action = ActionType.None;
 		            CreateButtonsHelper.SelectedObjects.Clear();
 	            }
-              //  placedObject = Instantiate(placedPrefab, hitPose.position + offset, hitPose.rotation);
             }
             else
             {

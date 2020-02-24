@@ -3,19 +3,15 @@ using UnityEngine;
 
 public static class Game
 {
-    public static string PathToLinesMaterial = "Materials/Lines";
-
-    public static string PathToDotsMaterial = "Materials/Dots";
-
-    public static string PathToPrefabs = "Prefabs/";
-
-    public static List<GameObject> Actions = new List<GameObject>();
-
-    public static int MaxLevel = 3;
-
     private static string PathToLevelsDataFile = "Data/levels";
-
+    public static string PathToLinesMaterial => "Materials/Lines";
+    public static string PathToDotsMaterial => "Materials/Dots";
+    public static string PathToPrefabs => "Prefabs/";
+    public static List<GameObject> Actions { get; } = new List<GameObject>();
+    public static int MaxLevel => 3;
     public static Level CurrentLevelData { get; private set; }
+    public static GameObject MainShape { get; set; }
+    public static bool IsAR { get; set; }
 
     public static void FillLevelData(int levelNumber)
     {

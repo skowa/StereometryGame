@@ -20,7 +20,7 @@ public class CreateButtonsHelper
             case ActionType.Dot:
                 if (SelectedObjects.Count == 2)
                 {
-                    var shape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
+                    var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
 
@@ -42,7 +42,7 @@ public class CreateButtonsHelper
             case ActionType.Line:
                 if (SelectedObjects.Count == 2)
                 {
-                    var shape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
+                    var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
 
@@ -61,7 +61,7 @@ public class CreateButtonsHelper
             case ActionType.ParallelLine:
                 if (SelectedObjects.Count == 2)
                 {
-                    var shape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
+                    var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
 
@@ -92,7 +92,7 @@ public class CreateButtonsHelper
             case ActionType.Check:
                 if (SelectedObjects.Count == Game.CurrentLevelData.Answer.Count)
                 {
-                    var shape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
+                    var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
 
