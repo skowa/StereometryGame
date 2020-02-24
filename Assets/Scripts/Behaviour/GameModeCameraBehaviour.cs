@@ -18,6 +18,8 @@ public class GameModeCameraBehaviour : MonoBehaviour
 				CreateButtonsHelper.Action = ActionType.None;
 				CreateButtonsHelper.SelectedObjects.Clear();
 			}
+
+			Game.MainShape = mainShape;
 		}
 		else
 		{

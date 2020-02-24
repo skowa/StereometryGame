@@ -10,26 +10,18 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 	public class GameModeButtonsManager : MonoBehaviour
 	{
 		[SerializeField] private Button _togglePlaneDetectionButton;
-
 		[SerializeField] private Button _backButton;
-
 		[SerializeField] private Button _cancelButton;
-
 		[SerializeField] private Button _onceAgainButton;
-
 		[SerializeField] private Button _toDoButton;
-
 		[SerializeField] private Button _arButton;
-
 		[SerializeField] private Button _rightAnswerButton;
-
 		[SerializeField] private ARPlaneManager _aRPlaneManager;
-
 		[SerializeField] private bool _isArMode;
-
 		[SerializeField] private GameObject _description;
-
 		[SerializeField] private Button _hideDescription;
+		[SerializeField] private Button _fillShape;
+		private bool _isFilled = false;
 
 		private void Start()
 		{
@@ -46,6 +38,14 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 			_rightAnswerButton.onClick.AddListener(RightAnswerHandler);
 			_toDoButton.onClick.AddListener(ToDoButtonHandler);
 			_hideDescription.onClick.AddListener(HideDescriptionHandler);
+			_fillShape.onClick.AddListener(() =>
+			{
+				Game.MainShape.transform.GetChild(0).GetComponent<Renderer>().material = _isFilled
+					? Resources.Load<Material>(Game.PathToTransparentMaterial)
+					: Resources.Load<Material>(Game.PathToFilledMaterial);
+				_isFilled = !_isFilled;
+			});
+
 			if (_isArMode)
 			{
 				_togglePlaneDetectionButton.onClick.AddListener(TogglePlaneDetection);
@@ -139,7 +139,6 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 				yield return null;
 			}
 
-			Game.MainShape = GameObject.Find(Game.CurrentLevelData.Type.ToString());
 			SceneManager.MoveGameObjectToScene(Game.MainShape, SceneManager.GetSceneByName(sceneName));
 			loadScene.allowSceneActivation = true;
 			while (!loadScene.isDone)

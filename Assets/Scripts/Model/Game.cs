@@ -6,6 +6,8 @@ public static class Game
     private static string PathToLevelsDataFile = "Data/levels";
     public static string PathToLinesMaterial => "Materials/Lines";
     public static string PathToDotsMaterial => "Materials/Dots";
+    public static string PathToFilledMaterial => "Materials/MainShapeFilled";
+    public static string PathToTransparentMaterial => "Materials/Transparent";
     public static string PathToPrefabs => "Prefabs/";
     public static List<GameObject> Actions { get; } = new List<GameObject>();
     public static int MaxLevel => 3;
