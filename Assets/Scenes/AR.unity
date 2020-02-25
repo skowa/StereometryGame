@@ -2405,9 +2405,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92c6bc3f1ef00754da24eb8b41ae1003, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placedPrefab: {fileID: 1714026790141987709, guid: ce60f5c4ee435b4439302143511282ff,
-    type: 3}
-  arCamera: {fileID: 1984871219}
+  _arCamera: {fileID: 1984871219}
 --- !u!114 &1184428327
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -76,42 +76,49 @@ public class GameModeCameraBehaviour : MonoBehaviour
 		{
 			if (hit.collider.transform != null)
 			{
-				GameObject gameObject = hit.collider.transform.gameObject;
+				GameObject hitObject = hit.collider.transform.gameObject;
 
-				if (gameObject.tag == "Edge")
+				switch (hitObject.tag)
 				{
-					if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
+					case "Edge":
 					{
-						if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-						    CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+						if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
 						{
-							return;
+							if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
+							    CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+							{
+								return;
+							}
+
+							GameObject parentObject = hitObject.transform.parent.gameObject;
+
+							CreateButtonsHelper.SelectedObjects.Add(parentObject);
+
+							var renderer = parentObject.GetComponent<Renderer>();
+							renderer.material.color = Color.magenta;
 						}
 
-						GameObject parentObject = gameObject.transform.parent.gameObject;
-
-						CreateButtonsHelper.SelectedObjects.Add(parentObject);
-
-						var renderer = parentObject.GetComponent<Renderer>();
-						renderer.material.color = Color.magenta;
+						break;
 					}
-				}
 
-				if (gameObject.tag == "Dot")
-				{
-					if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check
-					                                                  || CreateButtonsHelper.Action == ActionType.ParallelLine)
+					case "Dot":
 					{
-						if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-						    CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
+						if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check
+						                                                  || CreateButtonsHelper.Action == ActionType.ParallelLine)
 						{
-							return;
+							if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
+							    CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
+							{
+								return;
+							}
+
+							CreateButtonsHelper.SelectedObjects.Add(hitObject);
+
+							var renderer = hitObject.GetComponent<Renderer>();
+							renderer.material.color = Color.magenta;
 						}
 
-						CreateButtonsHelper.SelectedObjects.Add(gameObject);
-
-						var renderer = gameObject.GetComponent<Renderer>();
-						renderer.material.color = Color.magenta;
+						break;
 					}
 				}
 			}

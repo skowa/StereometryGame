@@ -44,7 +44,7 @@ public class ObjectCreator
 
         lineObject.transform.SetParent(transform);
         var scriptableObject = lineObject.AddComponent<LineBehaviour>();
-        scriptableObject.InstantiateFields(line.StartPoint, line.EndPoint, material, false);
+        scriptableObject.InstantiateFields(line.StartPoint, line.EndPoint, material, false, Game.IsAR);
 
         lineObject.tag = "Edge";
         lineObject.name = "Line";
