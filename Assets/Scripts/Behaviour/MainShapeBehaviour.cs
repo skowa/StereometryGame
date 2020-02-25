@@ -5,7 +5,6 @@ public class MainShapeBehaviour : MonoBehaviour
     private float _rotSpeed = 30;
     private ObjectCreator _objectCreator;
     private Vector2 _lastAxis;
-    private readonly float _distance = 10f;
     private GameObject _playerCamera;
     private GameObject[] _letters;
 
@@ -14,9 +13,10 @@ public class MainShapeBehaviour : MonoBehaviour
 		_lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
         _objectCreator = new ObjectCreator();
 
-        if (Game.MainShape == null)
+        if (!Game.IsLevelFilled)
         {
 	        CreateLevel();
+	        Game.IsLevelFilled = true;
         }
 
 		transform.Rotate(-8, -12, 0.5f);

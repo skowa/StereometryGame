@@ -74,6 +74,8 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 			}
 			else
 			{
+				Game.MainShape = null;
+				Game.IsLevelFilled = false;
 				SceneManager.LoadScene("Levels");
 			}
 		}
@@ -81,6 +83,7 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 		private void RightAnswerHandler()
 		{
 			Game.MainShape = null;
+			Game.IsLevelFilled = false;
 			SceneManager.LoadScene("Levels");
 		}
 

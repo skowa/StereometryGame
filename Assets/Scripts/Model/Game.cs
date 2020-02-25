@@ -14,6 +14,7 @@ public static class Game
     public static Level CurrentLevelData { get; private set; }
     public static GameObject MainShape { get; set; }
     public static bool IsAR { get; set; }
+    public static bool IsLevelFilled { get; set; }
 
     public static void FillLevelData(int levelNumber)
     {
