@@ -38,6 +38,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3096491784141987602}
     m_Modifications:
+    - target: {fileID: 454617310582975802, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 632725432453843040, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 900126285926023349, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2784132112876584013, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4145230104448767253, guid: ef1e399bcea51c647aa0835244af9f8f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -97,6 +117,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TetrahedronCore
+      objectReference: {fileID: 0}
+    - target: {fileID: 6168656848324795716, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 9213981175855625200, guid: ef1e399bcea51c647aa0835244af9f8f,
+        type: 3}
+      propertyPath: m_Radius
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ef1e399bcea51c647aa0835244af9f8f, type: 3}

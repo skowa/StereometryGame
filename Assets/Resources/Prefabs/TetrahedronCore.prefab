@@ -134,7 +134,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 3.6
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -641,7 +641,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 3.6
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -697,7 +697,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &161398596122798891
 MeshRenderer:
@@ -779,7 +779,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 4.9729266
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -824,7 +824,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 5.3898053
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -869,7 +869,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 5.091169
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -887,7 +887,7 @@ GameObject:
   - component: {fileID: 454617310582975802}
   - component: {fileID: 7371458238765366023}
   m_Layer: 0
-  m_Name: Tetrahedron
+  m_Name: TetrahedronCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1173,7 +1173,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.04
+  m_Radius: 0.08
   m_Height: 4.2720017
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0}
@@ -1505,7 +1505,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2301838128980749689
 MeshRenderer:
@@ -1598,7 +1598,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &5056160054753121795
 MeshRenderer:
@@ -1784,7 +1784,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.75
+  m_Radius: 1.6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &2202565757019044384
 MeshRenderer:

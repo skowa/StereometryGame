@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameModeCameraBehaviour : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class GameModeCameraBehaviour : MonoBehaviour
 			Game.MainShape.transform.localScale = new Vector3(1, 1, 1);
 			foreach (var lineRenderer in Game.MainShape.transform.GetComponentsInChildren<LineRenderer>())
 			{
-				lineRenderer.widthMultiplier = 1;
+				lineRenderer.startWidth = 0.03f;
+				lineRenderer.endWidth = 0.03f;
 			}
 
 			Game.MainShape.transform.GetChild(0).gameObject.AddComponent<MainShapeBehaviour>();
@@ -93,8 +95,10 @@ public class GameModeCameraBehaviour : MonoBehaviour
 							GameObject parentObject = hitObject.transform.parent.gameObject;
 
 							CreateButtonsHelper.SelectedObjects.Add(parentObject);
+							Game.CurrentLevelData.Description += "**2  ";
 
-							var renderer = parentObject.GetComponent<Renderer>();
+
+								var renderer = parentObject.GetComponent<Renderer>();
 							renderer.material.color = Color.magenta;
 						}
 

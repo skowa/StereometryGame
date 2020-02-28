@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -17,27 +18,87 @@ public class ARController : MonoBehaviour
 
 	private static readonly List<ARRaycastHit> Hits = new List<ARRaycastHit>();
 
-	private readonly Vector3 _offset = new Vector3(0, 0.35f, 0);
+	private Vector3 _offset = new Vector3(0, 0.35f, 0);
+
+    private Rect _placementRect;
+    private readonly float _yAxisMultiplier = 1.171875f;
+    private readonly float _minScale = 0.05f;
+    private readonly float _maxScale = 1f;
+    private readonly float _floatEqualityApproximation = 1e-10f;
 
 	private void Start()
 	{
+		_offset = new Vector3(0,0, 0);
+		_placementRect = new Rect(80, 360, Screen.width - 160, Screen.height - 920);
 		Game.IsAR = true;
 	}
 
-	private void Awake()
+	private float CountWidth()
+	{
+		float actualWidth = Game.MainShape.transform.GetChild(0).GetComponent<Collider>().bounds.size.y / 2;
+		float outScale = Game.MainShape.transform.localScale.y;
+		float inScale = Game.MainShape.transform.GetChild(0).localScale.y;
+
+	return actualWidth / outScale / inScale;
+	}
+
+    private void Awake()
 	{
 		_arRaycastManager = GetComponent<ARRaycastManager>();
 	}
 
 	private void Update()
 	{
+		ProcessPinchTouch();
 		ProcessTouchOnShapeComponents();
 		ProcessShapeMovement();
 	}
 
+	private void ProcessPinchTouch()
+	{
+		if (Input.touchCount == 2)
+		{
+			Touch touch0 = Input.GetTouch(0);
+			Touch touch1 = Input.GetTouch(1);
+
+			Vector2 prevPosition0 = touch0.position - touch0.deltaPosition;
+			Vector2 prevPosition1 = touch1.position - touch1.deltaPosition;
+
+			float prevMagnitude = (prevPosition0 - prevPosition1).magnitude;
+			float currentMagnitude = (touch0.position - touch1.position).magnitude;
+
+			float difference = currentMagnitude - prevMagnitude;
+
+			float incrementValue = difference * 0.0005f;
+			Vector3 currentScale = Game.MainShape.transform.localScale;
+			float xValue = GetScalingValueAccordingToBoundaries(currentScale.x, incrementValue);
+			float yValue = GetScalingValueAccordingToBoundaries(currentScale.y, incrementValue, _yAxisMultiplier);
+
+			float zValue = GetScalingValueAccordingToBoundaries(currentScale.z, incrementValue);
+
+			Game.MainShape.transform.localScale = new Vector3(xValue, yValue, zValue);
+			foreach (var lineRenderer in Game.MainShape.transform.GetChild(0).GetComponentsInChildren<LineRenderer>())
+			{
+				lineRenderer.startWidth = 0.0045f;
+				lineRenderer.endWidth = 0.0045f;
+			}
+		}
+	}
+
+	private float GetScalingValueAccordingToBoundaries(float currentScale, float scalingValue, float multiplier = 1)
+	{
+		float newValue = currentScale + scalingValue * multiplier;
+		if (newValue > _maxScale * multiplier || newValue < _minScale * multiplier)
+		{
+			return currentScale;
+		}
+
+		return newValue;
+	}
+
 	private void ProcessTouchOnShapeComponents()
 	{
-		if (Input.touchCount > 0)
+		if (Input.touchCount == 1)
 		{
 			Touch touch = Input.GetTouch(0);
 			_touchPosition = touch.position;
@@ -62,6 +123,8 @@ public class ARController : MonoBehaviour
 									GameObject parentObject = hitObject.transform.parent.gameObject;
 
 									CreateButtonsHelper.SelectedObjects.Add(parentObject);
+
+									Game.CurrentLevelData.Description += "**1  ";
 
 									var renderer = parentObject.GetComponent<Renderer>();
 									renderer.material.color = Color.magenta;
@@ -125,13 +188,15 @@ public class ARController : MonoBehaviour
 					_placedObject.SetActive(true);
 
 					var placedObjectShape = _placedObject.transform.GetChild(0).gameObject;
-					placedObjectShape.transform.position = hitPose.position + _offset;
-					placedObjectShape.transform.rotation = hitPose.rotation;
+					_placedObject.transform.localPosition = hitPose.position + _offset;
+					_placedObject.transform.rotation = new Quaternion();
+					placedObjectShape.transform.rotation = new Quaternion();
 					_placedObject.transform.localScale = new Vector3(0.16f, 0.1875f, 0.16f);
 					placedObjectShape.AddComponent<PlacementObject>();
 					foreach (var lineRenderer in placedObjectShape.transform.GetComponentsInChildren<LineRenderer>())
 					{
-						lineRenderer.widthMultiplier = 0.3f;
+						lineRenderer.startWidth = 0.0045f;
+						lineRenderer.endWidth = 0.0045f;
 					}
 
 					Destroy(placedObjectShape.GetComponent<MainShapeBehaviour>());
@@ -143,8 +208,10 @@ public class ARController : MonoBehaviour
 			{
 				if (_onTouchHold)
 				{
-					_placedObject.transform.position = hitPose.position + _offset;
-					_placedObject.transform.rotation = hitPose.rotation;
+					//if (_placementRect.Contains(hitPose.position))
+					{
+						_placedObject.transform.localPosition = hitPose.position + _offset;
+					}
 				}
 			}
 		}

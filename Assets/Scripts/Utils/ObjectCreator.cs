@@ -4,18 +4,6 @@ using UnityEngine;
 
 public class ObjectCreator
 {
-    public void CreateLineObjectForButtons(Vector3 start, Vector3 end, Transform transform, Color color)
-    {
-        var lineObject = new GameObject();
-
-        lineObject.transform.SetParent(transform);
-        var scriptableObject = lineObject.AddComponent<LineBehaviour>();
-
-        var material = new Material(Shader.Find("Unlit/Color")) {color = color};
-
-        scriptableObject.InstantiateFields(start, end, material, false);
-    }
-
     public GameObject CreateLongLineObject(Vector3 start, Vector3 end, Transform transform, Material material, float parameter)
     {
         List<Func<float, float>> equations = LineEquationAlgorithms.CreateLineEquation(start, end);
@@ -43,14 +31,24 @@ public class ObjectCreator
         var lineObject = new GameObject();
 
         lineObject.transform.SetParent(transform);
-        var scriptableObject = lineObject.AddComponent<LineBehaviour>();
-        scriptableObject.InstantiateFields(line.StartPoint, line.EndPoint, material, false, Game.IsAR);
 
+        LineRenderer lineRenderer = lineObject.AddComponent<LineRenderer>();
+        lineRenderer.material = material;
+        lineRenderer.positionCount = 2;
+
+        lineRenderer.startWidth = Game.IsAR ? 0.0045f : 0.03f;
+        lineRenderer.endWidth = Game.IsAR ? 0.0045f : 0.03f;
+
+        lineRenderer.SetPosition(0, line.StartPoint);
+        lineRenderer.SetPosition(1, line.EndPoint);
+        lineRenderer.useWorldSpace = false;
+
+        CreateLineCollider(lineObject.transform, line, false);
+        
         lineObject.tag = "Edge";
         lineObject.name = "Line";
-
-        scriptableObject.AddColliderToLineObject();
         lineObject.transform.GetChild(0).tag = "Edge";
+
 
         return lineObject;
     }
@@ -64,7 +62,7 @@ public class ObjectCreator
         sphere.transform.SetParent(transform);
         sphere.transform.position = new Vector3(vector3.x, vector3.y, vector3.z);
         sphere.transform.localScale = new Vector3(0.04f, 0.04f, 0.04f);
-        sphere.GetComponent<SphereCollider>().radius = 0.75f;
+        sphere.GetComponent<SphereCollider>().radius = 2f;
 
         return sphere;
     }
@@ -106,6 +104,26 @@ public class ObjectCreator
         renderer.material = material;
 
         return sphere;
+    }
+
+    private void CreateLineCollider(Transform transform, Line line, bool isLongLine)
+    {
+	    GameObject colliderWrapper = new GameObject();
+	    colliderWrapper.transform.SetParent(transform);
+
+	    CapsuleCollider collider = colliderWrapper.AddComponent<CapsuleCollider>();
+	    collider.radius = 0.1f;
+	    collider.center = Vector3.zero;
+	    collider.direction = 2;
+
+	    collider.transform.position = line.StartPoint + ((Vector3)line.EndPoint - line.StartPoint) / 2;
+	    collider.transform.LookAt(line.StartPoint);
+	    collider.height = ((Vector3)line.EndPoint - line.StartPoint).magnitude;
+
+	    if (isLongLine)
+	    {
+		    collider.height *= 3;
+	    }
     }
 }
 

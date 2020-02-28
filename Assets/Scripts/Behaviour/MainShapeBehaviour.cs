@@ -2,15 +2,15 @@
 
 public class MainShapeBehaviour : MonoBehaviour
 {
-    private float _rotSpeed = 30;
+    private float _rotationSpeed = 0.1f;
     private ObjectCreator _objectCreator;
-    private Vector2 _lastAxis;
     private GameObject _playerCamera;
     private GameObject[] _letters;
+    private Rect _rotationRect;
 
     void Start ()
 	{
-		_lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+		_rotationRect = new Rect(0, 360, Screen.width, Screen.height - 920);
         _objectCreator = new ObjectCreator();
 
         if (!Game.IsLevelFilled)
@@ -20,28 +20,26 @@ public class MainShapeBehaviour : MonoBehaviour
         }
 
 		transform.Rotate(-8, -12, 0.5f);
-		
 		_playerCamera = GameObject.Find("Main Camera");
 		_letters = GameObject.FindGameObjectsWithTag("Letter");
 	}
 
     private void Update()
     {
+	    if (Input.touchCount == 1)
+	    {
+		    Touch touch = Input.GetTouch(0);
+		    if (_rotationRect.Contains(touch.position) && touch.phase == TouchPhase.Moved)
+		    {
+                transform.RotateAround(Vector3.up, -touch.deltaPosition.x * _rotationSpeed * Mathf.Deg2Rad);
+                transform.RotateAround(Vector3.right, touch.deltaPosition.y * _rotationSpeed * Mathf.Deg2Rad);
+		    }
+	    }
+
         foreach (var letter in _letters)
         {
 		    letter.transform.rotation = new Quaternion(0.0f, _playerCamera.transform.rotation.y, 0.0f, _playerCamera.transform.rotation.w);
         }
-    }
-
-    private void OnMouseDrag()
-    {
-        float rotX = Input.GetAxis("Mouse X") * _rotSpeed * Mathf.Deg2Rad;//-(_lastAxis.x - Input.mousePosition.x) * _rotSpeed * Mathf.Deg2Rad;//
-       // float rotX = -(_lastAxis.x - Input.mousePosition.x) * _rotSpeed * Mathf.Deg2Rad;//
-        float rotY = Input.GetAxis("Mouse Y") * _rotSpeed * Mathf.Deg2Rad;//-(_lastAxis.y - Input.mousePosition.y) * _rotSpeed * Mathf.Deg2Rad;//
-        //float rotY = -(_lastAxis.y - Input.mousePosition.y) * _rotSpeed * Mathf.Deg2Rad;//
-        _lastAxis = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
-        transform.Rotate(Vector3.up, -rotX);
-        transform.Rotate(Vector3.right, rotY);
     }
 
     private void CreateLevel()

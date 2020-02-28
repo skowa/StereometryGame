@@ -23,8 +23,8 @@ public class LineBehaviour : MonoBehaviour
         lineRenderer.material = _material;
         lineRenderer.positionCount = 2;
 
-        lineRenderer.startWidth = _isArMode ? 0.009f : 0.03f;
-        lineRenderer.endWidth = _isArMode ? 0.009f : 0.03f;
+        lineRenderer.startWidth = _isArMode ? 0.0045f : 0.03f;
+        lineRenderer.endWidth = _isArMode ? 0.0045f : 0.03f;
 
         lineRenderer.SetPosition(0, _start);
         lineRenderer.SetPosition(1, _end);
@@ -37,7 +37,7 @@ public class LineBehaviour : MonoBehaviour
         colliderWrapper.transform.SetParent(transform);
 
         CapsuleCollider collider = colliderWrapper.AddComponent<CapsuleCollider>();
-        collider.radius = 0.04f;
+        collider.radius = 0.1f;
         collider.center = Vector3.zero;
         collider.direction = 2;
 

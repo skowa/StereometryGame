@@ -39,10 +39,17 @@ public class BuildButtonsManager : MonoBehaviour
 
 		_rotateButton.onClick.AddListener(() =>
 		{
-			var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
+			Transform shapeTransform = Game.MainShape.transform.GetChild(0);
 
-			shape.transform.localRotation = Quaternion.identity;
-			shape.transform.Rotate(-8, -12, 0.5f);
+			if (!Game.IsAR)
+			{
+				shapeTransform.transform.localRotation = Quaternion.identity;
+				shapeTransform.transform.Rotate(-8, -12, 0.5f);
+			}
+			else
+			{
+				Game.MainShape.transform.rotation = Quaternion.identity;
+			}
 		});
 
 		_checkButton.onClick.AddListener(() =>

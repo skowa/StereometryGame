@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class CreateButtonsHelper
 {
-    public static ActionType Action; 
-    public static List<GameObject> SelectedObjects = new List<GameObject>();
+    public static ActionType Action { get; set; }
+    public static List<GameObject> SelectedObjects { get; set; } = new List<GameObject>();
 
     public static void CreateObject()
     {
@@ -18,34 +18,51 @@ public class CreateButtonsHelper
             case ActionType.None:
                 break;
             case ActionType.Dot:
-                if (SelectedObjects.Count == 2)
-                {
-                    var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
-                    Quaternion rotation = shape.transform.rotation;
-                    shape.transform.localRotation = Quaternion.identity;
+	            try
+	            {
+                    if (SelectedObjects.Count == 2)
+		            {
+			            Game.CurrentLevelData.Description += "start";
+			            var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
+			            Game.CurrentLevelData.Description += " found";
+			            Quaternion rotation = shape.transform.rotation;
+			            shape.transform.localRotation = Quaternion.identity;
 
-                    LineRenderer firstLineRenderer = SelectedObjects[0].GetComponent<LineRenderer>();
-                    LineRenderer secondLineRenderer = SelectedObjects[1].GetComponent<LineRenderer>();
+			            LineRenderer firstLineRenderer = SelectedObjects[0].GetComponent<LineRenderer>();
+			            Game.CurrentLevelData.Description += "fisrt";
+			            LineRenderer secondLineRenderer = SelectedObjects[1].GetComponent<LineRenderer>();
+			            Game.CurrentLevelData.Description += "second";
+			            Game.CurrentLevelData.Description +=
+				            $"{firstLineRenderer.GetPosition(0)}     {firstLineRenderer.GetPosition(1)}   {secondLineRenderer.GetPosition(0)}  {secondLineRenderer.GetPosition(1)}";
+			            Line firstLine = new Line(firstLineRenderer.GetPosition(0), firstLineRenderer.GetPosition(1));
+			            Line secondLine = new Line(secondLineRenderer.GetPosition(0), secondLineRenderer.GetPosition(1));
 
-                    Line firstLine = new Line(firstLineRenderer.GetPosition(0), firstLineRenderer.GetPosition(1));
-                    Line secondLine = new Line(secondLineRenderer.GetPosition(0), secondLineRenderer.GetPosition(1));
+			            GameObject dot = creator.CreateDotBetweenLines(firstLine, secondLine, shape.transform, Resources.Load<Material>(Game.PathToDotsMaterial));
+			            Game.Actions.Add(dot);
 
-                    GameObject dot = creator.CreateDotBetweenLines(firstLine, secondLine, shape.transform, Resources.Load<Material>(Game.PathToDotsMaterial));
-                    Game.Actions.Add(dot);
+			            shape.transform.rotation = rotation;
+		            }
 
-                    shape.transform.rotation = rotation;
-                }
+		            Clear();
+	            }
+	            catch (Exception e)
+	            {
+		            Game.CurrentLevelData.Description += e;
 
-                Clear();
+	            }
 
-                break;
+	            break;
             case ActionType.Line:
                 if (SelectedObjects.Count == 2)
                 {
                     var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
+                    Quaternion parentRotation = shape.transform.parent.rotation;
+                    shape.transform.parent.localRotation = Quaternion.identity;
 
+                    Game.CurrentLevelData.Description += SelectedObjects[0].transform.position + "    ";
+                    Game.CurrentLevelData.Description += SelectedObjects[1].transform.position;
                     Vector3 start = SelectedObjects[0].transform.position;
                     Vector3 end = SelectedObjects[1].transform.position;
 
@@ -53,6 +70,7 @@ public class CreateButtonsHelper
                     Game.Actions.Add(line);
 
                     shape.transform.rotation = rotation;
+                    shape.transform.parent.rotation = parentRotation;
                 }
 
                 Clear();

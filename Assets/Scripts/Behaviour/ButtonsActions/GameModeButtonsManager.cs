@@ -21,10 +21,17 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 		[SerializeField] private GameObject _description;
 		[SerializeField] private Button _hideDescription;
 		[SerializeField] private Button _fillShape;
-		private bool _isFilled = false;
+		[SerializeField] private Button _rotateLeft;
+		[SerializeField] private Button _rotateRight;
+		private bool _isFilled;
+		private readonly Vector3 _rotateSpeed = Vector3.zero;
+		private Quaternion _rotationLeft;
+		private Quaternion _rotationRight;
 
 		private void Start()
 		{
+			_rotationLeft = Quaternion.Euler(0, 10f, 0);
+			_rotationRight = Quaternion.Euler(0, -10f, 0);
 			if (CheckButtonsNotAssigned())
 			{
 				Debug.LogError("You must set buttons in the inspector");
@@ -49,6 +56,8 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 			if (_isArMode)
 			{
 				_togglePlaneDetectionButton.onClick.AddListener(TogglePlaneDetection);
+				_rotateLeft.onClick.AddListener(RotateLeftHandler);
+				_rotateRight.onClick.AddListener(RotateRightHandler);
 			}
 			else
 			{
@@ -157,6 +166,17 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 			_description.SetActive(false);
 
 			Resources.FindObjectsOfTypeAll<GameObject>().First(go => go.name == Game.CurrentLevelData.Type.ToString()).SetActive(true);
+		}
+
+		private void RotateLeftHandler()
+		{
+			Game.MainShape.transform.rotation *= _rotationLeft;
+		}
+
+		private void RotateRightHandler()
+		{
+			Game.MainShape.transform.rotation *= _rotationRight;
+			//Game.MainShape.transform.GetChild(0).Rotate(-_rotateSpeed * Time.deltaTime, Space.World);
 		}
 
 		private bool CheckButtonsNotAssigned()
