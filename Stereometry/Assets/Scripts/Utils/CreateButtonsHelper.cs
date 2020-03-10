@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Assets.Scripts.Authorization;
+using Assets.Scripts.Model;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +10,7 @@ public class CreateButtonsHelper
 {
     public static ActionType Action { get; set; }
     public static List<GameObject> SelectedObjects { get; set; } = new List<GameObject>();
+    private static readonly AuthApiService AuthApiService;
 
     public static void CreateObject()
     {
@@ -129,6 +132,9 @@ public class CreateButtonsHelper
                         {
                             PlayerPrefs.SetInt("level", ++maxLevelSolved);
                             Game.Actions.Clear();
+
+                            AuthApiService.UpdateUserAsync(new User
+                                {Email = PlayerPrefs.GetString("email"), LevelsPassed = maxLevelSolved});
                         }
                         
                         GameObject.Find(Game.CurrentLevelData.Type.ToString()).SetActive(false);
