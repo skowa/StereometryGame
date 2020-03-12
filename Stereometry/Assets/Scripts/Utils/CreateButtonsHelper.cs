@@ -25,16 +25,12 @@ public class CreateButtonsHelper
 	            {
                     if (SelectedObjects.Count == 2)
 		            {
-			            Game.CurrentLevelData.Description += "start";
 			            var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
-			            Game.CurrentLevelData.Description += " found";
 			            Quaternion rotation = shape.transform.rotation;
 			            shape.transform.localRotation = Quaternion.identity;
 
 			            LineRenderer firstLineRenderer = SelectedObjects[0].GetComponent<LineRenderer>();
-			            Game.CurrentLevelData.Description += "fisrt";
 			            LineRenderer secondLineRenderer = SelectedObjects[1].GetComponent<LineRenderer>();
-			            Game.CurrentLevelData.Description += "second";
 			            Game.CurrentLevelData.Description +=
 				            $"{firstLineRenderer.GetPosition(0)}     {firstLineRenderer.GetPosition(1)}   {secondLineRenderer.GetPosition(0)}  {secondLineRenderer.GetPosition(1)}";
 			            Line firstLine = new Line(firstLineRenderer.GetPosition(0), firstLineRenderer.GetPosition(1));
@@ -61,8 +57,8 @@ public class CreateButtonsHelper
                     var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
                     Quaternion rotation = shape.transform.rotation;
                     shape.transform.localRotation = Quaternion.identity;
-                    Quaternion parentRotation = shape.transform.parent.rotation;
-                    shape.transform.parent.localRotation = Quaternion.identity;
+                    //Quaternion parentRotation = shape.transform.parent.rotation;
+                    //shape.transform.parent.localRotation = Quaternion.identity;
 
                     Game.CurrentLevelData.Description += SelectedObjects[0].transform.position + "    ";
                     Game.CurrentLevelData.Description += SelectedObjects[1].transform.position;
@@ -73,7 +69,7 @@ public class CreateButtonsHelper
                     Game.Actions.Add(line);
 
                     shape.transform.rotation = rotation;
-                    shape.transform.parent.rotation = parentRotation;
+                 //   shape.transform.parent.rotation = parentRotation;
                 }
 
                 Clear();
@@ -120,12 +116,10 @@ public class CreateButtonsHelper
                     bool result = SelectedObjects.All(o =>
                         Game.CurrentLevelData.Answer.Any(t => o.transform.localPosition == t));
 
-                    if (!result)
-                    {
-                        Clear();
-                        shape.transform.rotation = rotation;
-                    }
-                    else
+                    Clear();
+                    shape.transform.rotation = rotation;
+
+                    if(result)
                     {
                         int maxLevelSolved = PlayerPrefs.GetInt("level");
                         if (maxLevelSolved == Game.CurrentLevelData.Number)
