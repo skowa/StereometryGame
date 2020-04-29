@@ -7,8 +7,6 @@ TagManager:
   - Edge
   - Dot
   - Letter
-  - MainShape
-  - RectArea
   layers:
   - Default
   - TransparentFX

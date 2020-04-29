@@ -44,7 +44,7 @@ public class ObjectCreator
         lineRenderer.useWorldSpace = false;
 
         CreateLineCollider(lineObject.transform, line, false);
-        
+
         lineObject.tag = "Edge";
         lineObject.name = "Line";
         lineObject.transform.GetChild(0).tag = "Edge";
@@ -108,22 +108,22 @@ public class ObjectCreator
 
     private void CreateLineCollider(Transform transform, Line line, bool isLongLine)
     {
-	    GameObject colliderWrapper = new GameObject();
-	    colliderWrapper.transform.SetParent(transform);
+        GameObject colliderWrapper = new GameObject();
+        colliderWrapper.transform.SetParent(transform);
 
-	    CapsuleCollider collider = colliderWrapper.AddComponent<CapsuleCollider>();
-	    collider.radius = 0.1f;
-	    collider.center = Vector3.zero;
-	    collider.direction = 2;
+        CapsuleCollider collider = colliderWrapper.AddComponent<CapsuleCollider>();
+        collider.radius = 0.1f;
+        collider.center = Vector3.zero;
+        collider.direction = 2;
 
-	    collider.transform.position = line.StartPoint + ((Vector3)line.EndPoint - line.StartPoint) / 2;
-	    collider.transform.LookAt(line.StartPoint);
-	    collider.height = ((Vector3)line.EndPoint - line.StartPoint).magnitude;
+        collider.transform.position = line.StartPoint + ((Vector3)line.EndPoint - line.StartPoint) / 2;
+        collider.transform.LookAt(line.StartPoint);
+        collider.height = ((Vector3)line.EndPoint - line.StartPoint).magnitude;
 
-	    if (isLongLine)
-	    {
-		    collider.height *= 3;
-	    }
+        if (isLongLine)
+        {
+            collider.height *= 3;
+        }
     }
 }
 

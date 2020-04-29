@@ -21,44 +21,37 @@ public class BuildButtonsManager : MonoBehaviour
 
 		_dotButton.onClick.AddListener(() =>
 		{
-			CreateButtonsHelper.Action = ActionType.Dot;
+			CreateNewConstructionHelper.Action = ActionType.Dot;
 			EnableOkButton();
 		});
 
 		_lineButton.onClick.AddListener(() =>
 		{
-			CreateButtonsHelper.Action = ActionType.Line;
+			CreateNewConstructionHelper.Action = ActionType.Line;
 			EnableOkButton();
 		});
 
 		_parallelLineButton.onClick.AddListener(() =>
 		{
-			CreateButtonsHelper.Action = ActionType.ParallelLine;
+			CreateNewConstructionHelper.Action = ActionType.ParallelLine;
 			EnableOkButton();
 		});
 
 		_rotateButton.onClick.AddListener(() =>
 		{
-			Transform shapeTransform = Game.MainShape.transform.GetChild(0);
+			var shape = GameObject.Find($"{Game.CurrentLevelData.Type.ToString()}Core");
 
-			if (!Game.IsAR)
-			{
-				shapeTransform.transform.localRotation = Quaternion.identity;
-				shapeTransform.transform.Rotate(-8, -12, 0.5f);
-			}
-			else
-			{
-				Game.MainShape.transform.rotation = Quaternion.identity;
-			}
+			shape.transform.localRotation = Quaternion.identity;
+			shape.transform.Rotate(-8, -12, 0.5f);
 		});
 
 		_checkButton.onClick.AddListener(() =>
 		{
-			CreateButtonsHelper.Action = ActionType.Check;
+			CreateNewConstructionHelper.Action = ActionType.Check;
 			EnableOkButton();
 		});
 
-		_createButton.onClick.AddListener(CreateButtonsHelper.CreateObject);
+		_createButton.onClick.AddListener(CreateNewConstructionHelper.CreateObject);
 	}
 
 	private void EnableOkButton()

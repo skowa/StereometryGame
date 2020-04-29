@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -18,18 +17,15 @@ public class ARController : MonoBehaviour
 
 	private static readonly List<ARRaycastHit> Hits = new List<ARRaycastHit>();
 
-	private Vector3 _offset = new Vector3(0, 0.35f, 0);
+	private Vector3 _offset;
 
-    private Rect _placementRect;
-    private readonly float _yAxisMultiplier = 1.171875f;
-    private readonly float _minScale = 0.05f;
-    private readonly float _maxScale = 1f;
-    private readonly float _floatEqualityApproximation = 1e-10f;
+	private readonly float _yAxisMultiplier = 1.171875f;
+	private readonly float _minScale = 0.05f;
+	private readonly float _maxScale = 1f;
 
 	private void Start()
 	{
-		_offset = new Vector3(0,0, 0);
-		_placementRect = new Rect(80, 360, Screen.width - 160, Screen.height - 920);
+		_offset = new Vector3(0, 0.35f, 0);
 		Game.IsAR = true;
 	}
 
@@ -39,10 +35,10 @@ public class ARController : MonoBehaviour
 		float outScale = Game.MainShape.transform.localScale.y;
 		float inScale = Game.MainShape.transform.GetChild(0).localScale.y;
 
-	return actualWidth / outScale / inScale;
+		return actualWidth / outScale / inScale;
 	}
 
-    private void Awake()
+	private void Awake()
 	{
 		_arRaycastManager = GetComponent<ARRaycastManager>();
 	}
@@ -112,17 +108,17 @@ public class ARController : MonoBehaviour
 					{
 						case "Edge":
 							{
-								if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
+								if (CreateNewConstructionHelper.Action == ActionType.Dot || CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 								{
-									if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-										CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+									if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
+										CreateNewConstructionHelper.SelectedObjects[0].tag == "Edge")
 									{
 										return;
 									}
 
 									GameObject parentObject = hitObject.transform.parent.gameObject;
 
-									CreateButtonsHelper.SelectedObjects.Add(parentObject);
+									CreateNewConstructionHelper.SelectedObjects.Add(parentObject);
 
 									Game.CurrentLevelData.Description += "**1  ";
 
@@ -135,16 +131,16 @@ public class ARController : MonoBehaviour
 
 						case "Dot":
 							{
-								if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check ||
-								    CreateButtonsHelper.Action == ActionType.ParallelLine)
+								if (CreateNewConstructionHelper.Action == ActionType.Line || CreateNewConstructionHelper.Action == ActionType.Check ||
+									CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 								{
-									if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-									    CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
+									if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
+										CreateNewConstructionHelper.SelectedObjects[0].tag == "Dot")
 									{
 										return;
 									}
 
-									CreateButtonsHelper.SelectedObjects.Add(hitObject.transform.gameObject);
+									CreateNewConstructionHelper.SelectedObjects.Add(hitObject.transform.gameObject);
 
 									var hitObjectRenderer = hitObject.transform.GetComponent<Renderer>();
 									hitObjectRenderer.material.color = Color.magenta;
@@ -200,18 +196,15 @@ public class ARController : MonoBehaviour
 					}
 
 					Destroy(placedObjectShape.GetComponent<MainShapeBehaviour>());
-					CreateButtonsHelper.Action = ActionType.None;
-					CreateButtonsHelper.SelectedObjects.Clear();
+					CreateNewConstructionHelper.Action = ActionType.None;
+					CreateNewConstructionHelper.SelectedObjects.Clear();
 				}
 			}
 			else
 			{
 				if (_onTouchHold)
 				{
-					//if (_placementRect.Contains(hitPose.position))
-					{
-						_placedObject.transform.localPosition = hitPose.position + _offset;
-					}
+					_placedObject.transform.localPosition = hitPose.position + _offset;
 				}
 			}
 		}

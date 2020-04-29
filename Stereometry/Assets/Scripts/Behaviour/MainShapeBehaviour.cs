@@ -8,37 +8,42 @@ public class MainShapeBehaviour : MonoBehaviour
     private GameObject[] _letters;
     private Rect _rotationRect;
 
-    void Start ()
-	{
-		_rotationRect = new Rect(0, 360, Screen.width, Screen.height - 920);
+    void Start()
+    {
+        _rotationRect = new Rect(0, 360, Screen.width, Screen.height - 920);
         _objectCreator = new ObjectCreator();
 
         if (!Game.IsLevelFilled)
         {
-	        CreateLevel();
-	        Game.IsLevelFilled = true;
+            CreateLevel();
+            Game.IsLevelFilled = true;
         }
 
-		transform.Rotate(-8, -12, 0.5f);
-		_playerCamera = GameObject.Find("Main Camera");
-		_letters = GameObject.FindGameObjectsWithTag("Letter");
-	}
+        transform.Rotate(-8, -12, 0.5f);
+        if (Game.CurrentLevelData.Type == ShapeType.Tetrahedron)
+        {
+            transform.localPosition = new Vector3(-0.3f, 0, 0);
+        }
+
+        _playerCamera = GameObject.Find("Main Camera");
+        _letters = GameObject.FindGameObjectsWithTag("Letter");
+    }
 
     private void Update()
     {
-	    if (Input.touchCount == 1)
-	    {
-		    Touch touch = Input.GetTouch(0);
-		    if (_rotationRect.Contains(touch.position) && touch.phase == TouchPhase.Moved)
-		    {
+        if (Input.touchCount == 1)
+        {
+            Touch touch = Input.GetTouch(0);
+            if (_rotationRect.Contains(touch.position) && touch.phase == TouchPhase.Moved)
+            {
                 transform.RotateAround(Vector3.up, -touch.deltaPosition.x * _rotationSpeed * Mathf.Deg2Rad);
                 transform.RotateAround(Vector3.right, touch.deltaPosition.y * _rotationSpeed * Mathf.Deg2Rad);
-		    }
-	    }
+            }
+        }
 
         foreach (var letter in _letters)
         {
-		    letter.transform.rotation = new Quaternion(0.0f, _playerCamera.transform.rotation.y, 0.0f, _playerCamera.transform.rotation.w);
+            letter.transform.rotation = new Quaternion(0.0f, _playerCamera.transform.rotation.y, 0.0f, _playerCamera.transform.rotation.w);
         }
     }
 

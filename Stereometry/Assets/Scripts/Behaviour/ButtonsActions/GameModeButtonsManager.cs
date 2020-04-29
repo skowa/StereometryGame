@@ -108,7 +108,7 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 
 		private void OnceAgainButtonHandler()
 		{
-			CreateButtonsHelper.Action = ActionType.None;
+			CreateNewConstructionHelper.Action = ActionType.None;
 			foreach (GameObject t in Game.Actions)
 			{
 				Destroy(t);
@@ -182,8 +182,8 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 		private bool CheckButtonsNotAssigned()
 		{
 			return _isArMode && _togglePlaneDetectionButton == null || !_isArMode && _arButton == null ||
-			       _backButton == null || _cancelButton == null || _onceAgainButton == null ||
-			       _rightAnswerButton == null || _toDoButton == null;
+				   _backButton == null || _cancelButton == null || _onceAgainButton == null ||
+				   _rightAnswerButton == null || _toDoButton == null;
 		}
 	}
 }

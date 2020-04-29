@@ -16,8 +16,8 @@ public class GameModeCameraBehaviour : MonoBehaviour
 			{
 				mainShape.name = Game.CurrentLevelData.Type.ToString();
 				Game.Actions.Clear();
-				CreateButtonsHelper.Action = ActionType.None;
-				CreateButtonsHelper.SelectedObjects.Clear();
+				CreateNewConstructionHelper.Action = ActionType.None;
+				CreateNewConstructionHelper.SelectedObjects.Clear();
 			}
 
 			Game.MainShape = mainShape;
@@ -37,8 +37,8 @@ public class GameModeCameraBehaviour : MonoBehaviour
 			Game.MainShape.transform.GetChild(0).gameObject.AddComponent<MainShapeBehaviour>();
 
 			Destroy(Game.MainShape.transform.GetChild(0).gameObject.GetComponent<PlacementObject>());
-			CreateButtonsHelper.Action = ActionType.None;
-			CreateButtonsHelper.SelectedObjects.Clear();
+			CreateNewConstructionHelper.Action = ActionType.None;
+			CreateNewConstructionHelper.SelectedObjects.Clear();
 		}
 	}
 
@@ -83,47 +83,47 @@ public class GameModeCameraBehaviour : MonoBehaviour
 				switch (hitObject.tag)
 				{
 					case "Edge":
-					{
-						if (CreateButtonsHelper.Action == ActionType.Dot || CreateButtonsHelper.Action == ActionType.ParallelLine)
 						{
-							if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-							    CreateButtonsHelper.SelectedObjects[0].tag == "Edge")
+							if (CreateNewConstructionHelper.Action == ActionType.Dot || CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 							{
-								return;
-							}
+								if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
+									CreateNewConstructionHelper.SelectedObjects[0].tag == "Edge")
+								{
+									return;
+								}
 
-							GameObject parentObject = hitObject.transform.parent.gameObject;
+								GameObject parentObject = hitObject.transform.parent.gameObject;
 
-							CreateButtonsHelper.SelectedObjects.Add(parentObject);
-							Game.CurrentLevelData.Description += "**2  ";
+								CreateNewConstructionHelper.SelectedObjects.Add(parentObject);
+								Game.CurrentLevelData.Description += "**2  ";
 
 
 								var renderer = parentObject.GetComponent<Renderer>();
-							renderer.material.color = Color.magenta;
-						}
-
-						break;
-					}
-
-					case "Dot":
-					{
-						if (CreateButtonsHelper.Action == ActionType.Line || CreateButtonsHelper.Action == ActionType.Check
-						                                                  || CreateButtonsHelper.Action == ActionType.ParallelLine)
-						{
-							if (CreateButtonsHelper.Action == ActionType.ParallelLine && CreateButtonsHelper.SelectedObjects.Count == 1 &&
-							    CreateButtonsHelper.SelectedObjects[0].tag == "Dot")
-							{
-								return;
+								renderer.material.color = Color.magenta;
 							}
 
-							CreateButtonsHelper.SelectedObjects.Add(hitObject);
-
-							var renderer = hitObject.GetComponent<Renderer>();
-							renderer.material.color = Color.magenta;
+							break;
 						}
 
-						break;
-					}
+					case "Dot":
+						{
+							if (CreateNewConstructionHelper.Action == ActionType.Line || CreateNewConstructionHelper.Action == ActionType.Check
+																			  || CreateNewConstructionHelper.Action == ActionType.ParallelLine)
+							{
+								if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
+									CreateNewConstructionHelper.SelectedObjects[0].tag == "Dot")
+								{
+									return;
+								}
+
+								CreateNewConstructionHelper.SelectedObjects.Add(hitObject);
+
+								var renderer = hitObject.GetComponent<Renderer>();
+								renderer.material.color = Color.magenta;
+							}
+
+							break;
+						}
 				}
 			}
 		}

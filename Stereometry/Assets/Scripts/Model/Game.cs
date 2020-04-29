@@ -21,7 +21,7 @@ public static class Game
     {
         TextAsset textAsset = (TextAsset)Resources.Load(PathToLevelsDataFile, typeof(TextAsset));
         var levelLoader = new XmlDataLoader(textAsset.text);
-      // var levelLoader = new JsonDataLoader(PathToLevelsDataFile);
+        // var levelLoader = new JsonDataLoader(PathToLevelsDataFile);
         CurrentLevelData = levelLoader.LoadLevel(levelNumber);
     }
 }
