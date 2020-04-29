@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Assets.Scripts.Constants;
 using UnityEngine;
 
 public class ObjectCreator
@@ -45,10 +46,9 @@ public class ObjectCreator
 
         CreateLineCollider(lineObject.transform, line, false);
 
-        lineObject.tag = "Edge";
+        lineObject.tag = Tags.Edge;
         lineObject.name = "Line";
-        lineObject.transform.GetChild(0).tag = "Edge";
-
+        lineObject.transform.GetChild(0).tag = Tags.Edge;
 
         return lineObject;
     }
@@ -57,8 +57,8 @@ public class ObjectCreator
     {
         GameObject sphere = CreateSphereObject(material);
 
-        sphere.name = "Dot";
-        sphere.tag = "Dot";
+        sphere.name = Tags.Dot;
+        sphere.tag = Tags.Dot;
         sphere.transform.SetParent(transform);
         sphere.transform.position = new Vector3(vector3.x, vector3.y, vector3.z);
         sphere.transform.localScale = new Vector3(0.04f, 0.04f, 0.04f);
@@ -70,10 +70,10 @@ public class ObjectCreator
     public void CreateLetter(Letter letter, Transform transform, Color color)
     {
         GameObject text = CreateTextObject(letter.Name, color);
-        text.name = "Letter" + letter;
+        text.name = Tags.Letter + letter;
         text.transform.SetParent(transform);
         text.transform.localPosition += new Vector3(letter.Position.x, letter.Position.y, letter.Position.z);
-        text.tag = "Letter";
+        text.tag = Tags.Letter;
     }
 
     private GameObject CreateLongLineObjectCore(List<Func<float, float>> equations, Transform transform, Material material, float parameter)

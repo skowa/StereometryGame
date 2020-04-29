@@ -9,6 +9,7 @@ public class BuildButtonsManager : MonoBehaviour
 	[SerializeField] private Button _checkButton;
 	[SerializeField] private Button _rotateButton;
 	[SerializeField] private Button _createButton;
+	[SerializeField] private Button _crossSectionButton;
 
 	private void Start()
 	{
@@ -22,19 +23,16 @@ public class BuildButtonsManager : MonoBehaviour
 		_dotButton.onClick.AddListener(() =>
 		{
 			CreateNewConstructionHelper.Action = ActionType.Dot;
-			EnableOkButton();
 		});
 
 		_lineButton.onClick.AddListener(() =>
 		{
 			CreateNewConstructionHelper.Action = ActionType.Line;
-			EnableOkButton();
 		});
 
 		_parallelLineButton.onClick.AddListener(() =>
 		{
 			CreateNewConstructionHelper.Action = ActionType.ParallelLine;
-			EnableOkButton();
 		});
 
 		_rotateButton.onClick.AddListener(() =>
@@ -45,11 +43,18 @@ public class BuildButtonsManager : MonoBehaviour
 			shape.transform.Rotate(-8, -12, 0.5f);
 		});
 
+		_crossSectionButton.onClick.AddListener(() =>
+		{
+			CreateNewConstructionHelper.Action = ActionType.CrossSection;
+			EnableOkButton();
+		});
+
 		_checkButton.onClick.AddListener(() =>
 		{
 			CreateNewConstructionHelper.Action = ActionType.Check;
-			EnableOkButton();
-		});
+            CreateNewConstructionHelper.CreateObject();
+            ;
+        });
 
 		_createButton.onClick.AddListener(CreateNewConstructionHelper.CreateObject);
 	}

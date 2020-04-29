@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Linq;
+using Assets.Scripts.Constants;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -48,8 +49,8 @@ namespace Assets.Scripts.Behaviour.ButtonsActions
 			_fillShape.onClick.AddListener(() =>
 			{
 				Game.MainShape.transform.GetChild(0).GetComponent<Renderer>().material = _isFilled
-					? Resources.Load<Material>(Game.PathToTransparentMaterial)
-					: Resources.Load<Material>(Game.PathToFilledMaterial);
+					? Resources.Load<Material>(PathConstants.PathToTransparentMaterial)
+					: Resources.Load<Material>(PathConstants.PathToFilledMaterial);
 				_isFilled = !_isFilled;
 			});
 

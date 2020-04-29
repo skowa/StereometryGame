@@ -1,8 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Constants;
+using UnityEngine;
 
 public class MainShapeBehaviour : MonoBehaviour
 {
     private float _rotationSpeed = 0.1f;
+    private float _rotSpeed = 3;
     private ObjectCreator _objectCreator;
     private GameObject _playerCamera;
     private GameObject[] _letters;
@@ -26,7 +28,16 @@ public class MainShapeBehaviour : MonoBehaviour
         }
 
         _playerCamera = GameObject.Find("Main Camera");
-        _letters = GameObject.FindGameObjectsWithTag("Letter");
+        _letters = GameObject.FindGameObjectsWithTag(Tags.Letter);
+    }
+
+    private void OnMouseDrag()
+    {
+        float rotX = Input.GetAxis("Mouse X") * _rotSpeed * Mathf.Deg2Rad;
+        float rotY = Input.GetAxis("Mouse Y") * _rotSpeed * Mathf.Deg2Rad;
+
+        transform.RotateAround(Vector3.up, -rotX);
+        transform.RotateAround(Vector3.right, rotY);
     }
 
     private void Update()
@@ -51,12 +62,12 @@ public class MainShapeBehaviour : MonoBehaviour
     {
         foreach (Line line in Game.CurrentLevelData.Lines)
         {
-            _objectCreator.CreateLine(line, transform, Resources.Load<Material>(Game.PathToLinesMaterial));
+            _objectCreator.CreateLine(line, transform, Resources.Load<Material>(PathConstants.PathToLinesMaterial));
         }
 
         foreach (SerializableVector3 vertice in Game.CurrentLevelData.Vertices)
         {
-            _objectCreator.CreateDot(vertice, transform, Resources.Load<Material>(Game.PathToDotsMaterial));
+            _objectCreator.CreateDot(vertice, transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
         }
 
         foreach (Letter letter in Game.CurrentLevelData.Letters)

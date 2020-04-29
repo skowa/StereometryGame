@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿using Assets.Scripts.Constants;
 using UnityEngine;
 
 public class sample : MonoBehaviour
@@ -52,10 +52,10 @@ public class sample : MonoBehaviour
         CreateShape();
         CreateLetters();
         ObjectCreator _objectCreator = new ObjectCreator();
-        _objectCreator.CreateDot(new Vector3(-1.8f, -2f, -1.8f), transform, Resources.Load<Material>(Game.PathToDotsMaterial));
-        _objectCreator.CreateDot(new Vector3(1.8f, -2f, -1.8f), transform, Resources.Load<Material>(Game.PathToDotsMaterial));
-        _objectCreator.CreateDot(new Vector3(1.8f, -2f, 1.8f), transform, Resources.Load<Material>(Game.PathToDotsMaterial));
-        _objectCreator.CreateDot(new Vector3(0.6f, 2f, 0.9f), transform, Resources.Load<Material>(Game.PathToDotsMaterial));
+        _objectCreator.CreateDot(new Vector3(-1.8f, -2f, -1.8f), transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
+        _objectCreator.CreateDot(new Vector3(1.8f, -2f, -1.8f), transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
+        _objectCreator.CreateDot(new Vector3(1.8f, -2f, 1.8f), transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
+        _objectCreator.CreateDot(new Vector3(0.6f, 2f, 0.9f), transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
         transform.Rotate(-8, -12, 0.5f);
     }
 
@@ -92,10 +92,10 @@ public class sample : MonoBehaviour
         line.transform.SetParent(transform);
         line.AddComponent<LineRenderer>();
         line.name = "Line";
-        line.tag = "Edge";
+        line.tag = Tags.Edge;
 
         LineRenderer lineRenderer = line.GetComponent<LineRenderer>();
-        lineRenderer.material = Resources.Load<Material>(Game.PathToLinesMaterial);
+        lineRenderer.material = Resources.Load<Material>(PathConstants.PathToLinesMaterial);
         lineRenderer.positionCount = 2;
         lineRenderer.SetWidth(0.03f, 0.03f);
         lineRenderer.SetPosition(0, first);
@@ -115,14 +115,14 @@ public class sample : MonoBehaviour
         t.characterSize = 0.009f;
         t.transform.localPosition += new Vector3(x1, y1, z1);
 
-        text.name = "Letter" + letter;
+        text.name = Tags.Letter + letter;
     }
 
     private void addColliderToLine(GameObject line, Vector3 start, Vector3 end)
     {
         GameObject colliderWrapper = new GameObject();
         colliderWrapper.transform.SetParent(line.transform);
-        colliderWrapper.tag = "Edge";
+        colliderWrapper.tag = Tags.Edge;
 
         CapsuleCollider collider = colliderWrapper.AddComponent<CapsuleCollider>();
         collider.radius = 0.04f;

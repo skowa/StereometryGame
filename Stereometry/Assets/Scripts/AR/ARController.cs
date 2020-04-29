@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Scripts.Constants;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -106,12 +107,12 @@ public class ARController : MonoBehaviour
 				{
 					switch (hitObject.transform.tag)
 					{
-						case "Edge":
+						case Tags.Edge:
 							{
 								if (CreateNewConstructionHelper.Action == ActionType.Dot || CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 								{
 									if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
-										CreateNewConstructionHelper.SelectedObjects[0].tag == "Edge")
+										CreateNewConstructionHelper.SelectedObjects[0].tag == Tags.Edge)
 									{
 										return;
 									}
@@ -120,22 +121,20 @@ public class ARController : MonoBehaviour
 
 									CreateNewConstructionHelper.SelectedObjects.Add(parentObject);
 
-									Game.CurrentLevelData.Description += "**1  ";
-
-									var renderer = parentObject.GetComponent<Renderer>();
+                                    var renderer = parentObject.GetComponent<Renderer>();
 									renderer.material.color = Color.magenta;
 								}
 
 								break;
 							}
 
-						case "Dot":
+						case Tags.Dot:
 							{
 								if (CreateNewConstructionHelper.Action == ActionType.Line || CreateNewConstructionHelper.Action == ActionType.Check ||
 									CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 								{
 									if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
-										CreateNewConstructionHelper.SelectedObjects[0].tag == "Dot")
+										CreateNewConstructionHelper.SelectedObjects[0].tag == Tags.Dot)
 									{
 										return;
 									}

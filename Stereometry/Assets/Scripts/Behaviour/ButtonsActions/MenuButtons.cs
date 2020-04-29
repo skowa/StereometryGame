@@ -1,19 +1,20 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Constants;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuButtons : MonoBehaviour
 {
     void OnMouseUpAsButton()
     {
-        if (!PlayerPrefs.HasKey("level"))
+        if (!PlayerPrefs.HasKey(PlayerPrefsConstants.LevelPref))
         {
-            PlayerPrefs.SetInt("level", 1);
+            PlayerPrefs.SetInt(PlayerPrefsConstants.LevelPref, 1);
         }
 
         switch (gameObject.name)
         {
             case "play":
-                int currentLevel = PlayerPrefs.GetInt("level");
+                int currentLevel = PlayerPrefs.GetInt(PlayerPrefsConstants.LevelPref);
                 if (currentLevel > Game.MaxLevel)
                 {
                     return;

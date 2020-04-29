@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Constants;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class LevelButtonBehaviour : MonoBehaviour
@@ -9,7 +10,7 @@ public class LevelButtonBehaviour : MonoBehaviour
 
     private void Start()
     {
-        currentLevel = PlayerPrefs.GetInt("level");
+        currentLevel = PlayerPrefs.GetInt(PlayerPrefsConstants.LevelPref);
 
         int levelNumber = int.Parse(gameObject.name.Substring(5));
         var spriteWrapper = new GameObject { name = levelNumber.ToString() };
