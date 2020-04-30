@@ -112,10 +112,9 @@ public class GameModeCameraBehaviour : MonoBehaviour
 
                     case Tags.Dot:
                     {
-                        if (CreateNewConstructionHelper.Action ==
-                            ActionType.Line || CreateNewConstructionHelper.Action == ActionType.Check
-                                            || CreateNewConstructionHelper.Action == ActionType.ParallelLine
-                                            || CreateNewConstructionHelper.Action == ActionType.CrossSection)
+                        if (CreateNewConstructionHelper.Action == ActionType.Line
+                            || CreateNewConstructionHelper.Action == ActionType.ParallelLine
+                            || CreateNewConstructionHelper.Action == ActionType.CrossSection)
                         {
                             if (CreateNewConstructionHelper.Action == ActionType.ParallelLine &&
                                 CreateNewConstructionHelper.SelectedObjects.Count == 1 &&

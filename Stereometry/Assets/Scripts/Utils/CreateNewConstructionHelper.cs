@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using Assets.Scripts.Authorization;
+using Assets.Scripts.Behaviour.ButtonsActions;
 using Assets.Scripts.Constants;
 using Assets.Scripts.Model;
 using Assets.Scripts.Utils;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CreateNewConstructionHelper
 {
     private static readonly IAuthApiService AuthApiService = new AuthApiService();
     private static readonly ObjectCreator ObjectCreator = new ObjectCreator();
+    private static readonly Material LineMaterial = Resources.Load<Material>(PathConstants.PathToLinesMaterial);
+    private static readonly Material DotMaterial = Resources.Load<Material>(PathConstants.PathToDotsMaterial);
 
     public static ActionType Action { get; set; }
 
@@ -21,15 +23,13 @@ public class CreateNewConstructionHelper
     {
         switch (Action)
         {
-            case ActionType.None:
-                break;
             case ActionType.Dot:
                 if (SelectedObjects.Count == 2)
                 {
                     CreateWithShapeRotation(CreateDot);
                 }
 
-                Clear();
+                ResetAction();
 
                 break;
             case ActionType.Line:
@@ -38,7 +38,7 @@ public class CreateNewConstructionHelper
                     CreateWithShapeRotation(CreateLine);
                 }
 
-                Clear();
+                ResetAction();
 
                 break;
             case ActionType.ParallelLine:
@@ -47,7 +47,7 @@ public class CreateNewConstructionHelper
                     CreateWithShapeRotation(CreateParallelLine);
                 }
 
-                Clear();
+                ResetAction();
 
                 break;
             case ActionType.CrossSection:
@@ -55,27 +55,33 @@ public class CreateNewConstructionHelper
                 {
                     CreateWithShapeRotation(t => CreateCrossSection());
 
-                    Clear();
+                    ResetAction();
                 }
 
-                var okButton = GameObject.Find("OK");
-                okButton.GetComponent<Image>().enabled = false;
-                okButton.GetComponent<Collider2D>().enabled = false;
+                GameOkButton.Enable(false);
 
                 break;
             case ActionType.Check:
                 bool result = Check();
 
-                Clear();
+                ResetAction();
                 if (result)
                 {
                     SendLevelCompleted();
                 }
 
                 break;
-            default:
-                throw new ArgumentOutOfRangeException();
         }
+    }
+
+    public static void ResetAction()
+    {
+        var buildButtonsManager = GameObject.Find(GameObjectNames.GameScene.BuildButtonsManager);
+        buildButtonsManager.GetComponent<BuildButtonsManager>().ResetButtonByActionType(Action);
+
+        SelectedObjects.ForEach(UnselectGameObject);
+        SelectedObjects.Clear();
+        Action = ActionType.None;
     }
 
     private static void CreateWithShapeRotation(Action<Transform> buildAction)
@@ -95,19 +101,12 @@ public class CreateNewConstructionHelper
         switch (gameObject.tag)
         {
             case Tags.Edge:
-                renderer.material = Resources.Load<Material>(PathConstants.PathToLinesMaterial);
+                renderer.material = LineMaterial;
                 break;
             case Tags.Dot:
-                renderer.material = Resources.Load<Material>(PathConstants.PathToDotsMaterial);
+                renderer.material = DotMaterial;
                 break;
         }
-    }
-
-    private static void Clear()
-    {
-        SelectedObjects.ForEach(UnselectGameObject);
-        SelectedObjects.Clear();
-        Action = ActionType.None;
     }
 
     private static void CreateDot(Transform transform)
@@ -117,7 +116,7 @@ public class CreateNewConstructionHelper
         var firstLine = new Line(firstLineRenderer.GetPosition(0), firstLineRenderer.GetPosition(1));
         var secondLine = new Line(secondLineRenderer.GetPosition(0), secondLineRenderer.GetPosition(1));
 
-        GameObject dot = ObjectCreator.CreateDotBetweenLines(firstLine, secondLine, transform, Resources.Load<Material>(PathConstants.PathToDotsMaterial));
+        GameObject dot = ObjectCreator.CreateDotBetweenLines(firstLine, secondLine, transform, DotMaterial);
         Game.Actions.Add(dot);
     }
 
@@ -126,7 +125,7 @@ public class CreateNewConstructionHelper
         Vector3 start = SelectedObjects[0].transform.position;
         Vector3 end = SelectedObjects[1].transform.position;
 
-        GameObject line = ObjectCreator.CreateLongLineObject(start, end, transform, Resources.Load<Material>(PathConstants.PathToLinesMaterial), 5);
+        GameObject line = ObjectCreator.CreateLongLineObject(start, end, transform, LineMaterial, 5);
         Game.Actions.Add(line);
     }
 
@@ -146,7 +145,7 @@ public class CreateNewConstructionHelper
         }
 
         GameObject parallelLine = ObjectCreator.CreateParallelLineThroughDot(
-            new Line(line.GetPosition(0), line.GetPosition(1)), dot, transform, Resources.Load<Material>(PathConstants.PathToLinesMaterial));
+            new Line(line.GetPosition(0), line.GetPosition(1)), dot, transform, LineMaterial);
         Game.Actions.Add(parallelLine);
     }
 
@@ -192,7 +191,7 @@ public class CreateNewConstructionHelper
         }
 
         GameObject.Find(Game.CurrentLevelData.Type.ToString()).SetActive(false);
-        Resources.FindObjectsOfTypeAll<GameObject>().First(go => go.name == "RightAnswerWindow").SetActive(true);
+        Resources.FindObjectsOfTypeAll<GameObject>().First(go => go.name == GameObjectNames.GameScene.RightAnswerWindow).SetActive(true);
     }
 }
 

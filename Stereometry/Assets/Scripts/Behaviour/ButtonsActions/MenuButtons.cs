@@ -13,7 +13,7 @@ public class MenuButtons : MonoBehaviour
 
         switch (gameObject.name)
         {
-            case "play":
+            case GameObjectNames.MainScene.PlayButton:
                 int currentLevel = PlayerPrefs.GetInt(PlayerPrefsConstants.LevelPref);
                 if (currentLevel > Game.MaxLevel)
                 {
@@ -21,15 +21,13 @@ public class MenuButtons : MonoBehaviour
                 }
 
                 Game.FillLevelData(currentLevel);
-                SceneManager.LoadScene("Game");
+                SceneManager.LoadScene(Scenes.Game);
                 break;
-            case "button":
-                SceneManager.LoadScene("Levels");
+            case GameObjectNames.MainScene.LevelsButton:
+                SceneManager.LoadScene(Scenes.Levels);
                 break;
-            case "Profile":
-                SceneManager.LoadScene("Profile");
-                break;
-            default:
+            case GameObjectNames.MainScene.ProfileButton:
+                SceneManager.LoadScene(Scenes.Profile);
                 break;
         }
     }

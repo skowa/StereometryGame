@@ -123,6 +123,11 @@ public class ARController : MonoBehaviour
 
                                     var renderer = parentObject.GetComponent<Renderer>();
 									renderer.material.color = Color.magenta;
+
+                                    if (CreateNewConstructionHelper.SelectedObjects.Count == 2)
+                                    {
+                                        CreateNewConstructionHelper.CreateObject();
+                                    }
 								}
 
 								break;
@@ -130,7 +135,7 @@ public class ARController : MonoBehaviour
 
 						case Tags.Dot:
 							{
-								if (CreateNewConstructionHelper.Action == ActionType.Line || CreateNewConstructionHelper.Action == ActionType.Check ||
+								if (CreateNewConstructionHelper.Action == ActionType.Line || CreateNewConstructionHelper.Action == ActionType.CrossSection ||
 									CreateNewConstructionHelper.Action == ActionType.ParallelLine)
 								{
 									if (CreateNewConstructionHelper.Action == ActionType.ParallelLine && CreateNewConstructionHelper.SelectedObjects.Count == 1 &&
@@ -143,6 +148,12 @@ public class ARController : MonoBehaviour
 
 									var hitObjectRenderer = hitObject.transform.GetComponent<Renderer>();
 									hitObjectRenderer.material.color = Color.magenta;
+
+                                    if (CreateNewConstructionHelper.SelectedObjects.Count == 2 &&
+                                        CreateNewConstructionHelper.Action != ActionType.CrossSection)
+                                    {
+                                        CreateNewConstructionHelper.CreateObject();
+                                    }
 								}
 
 								break;
