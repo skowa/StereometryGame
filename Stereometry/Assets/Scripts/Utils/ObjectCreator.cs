@@ -61,7 +61,7 @@ public class ObjectCreator
         sphere.tag = Tags.Dot;
         sphere.transform.SetParent(transform);
         sphere.transform.position = new Vector3(vector3.x, vector3.y, vector3.z);
-        sphere.transform.localScale = new Vector3(0.04f, 0.04f, 0.04f);
+        sphere.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         sphere.GetComponent<SphereCollider>().radius = 2f;
 
         return sphere;

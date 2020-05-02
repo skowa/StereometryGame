@@ -9,7 +9,7 @@ public static class Game
 
     public static List<Vector3[]> CrossSections { get; } = new List<Vector3[]>();
 
-    public static int MaxLevel => 3;
+    public static int MaxLevel => 4;
 
     public static Level CurrentLevelData { get; private set; }
 

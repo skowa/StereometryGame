@@ -10,7 +10,7 @@ public class LevelButtonBehaviour : MonoBehaviour
 
     private void Start()
     {
-        currentLevel = PlayerPrefs.GetInt(PlayerPrefsConstants.LevelPref);
+        currentLevel = 4;//PlayerPrefs.GetInt(PlayerPrefsConstants.LevelPref);
 
         int levelNumber = int.Parse(gameObject.name.Substring(5));
         var spriteWrapper = new GameObject { name = levelNumber.ToString() };

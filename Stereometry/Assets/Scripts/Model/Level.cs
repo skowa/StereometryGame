@@ -4,11 +4,6 @@ using System.Collections.Generic;
 [Serializable]
 public class Level
 {
-    public Level()
-    {
-        
-    }
-
     public int Number { get; set; }
 
     public string Description { get; set; }
@@ -28,5 +23,7 @@ public class Level
 public enum ShapeType
 {
     Cube,
-    Tetrahedron
+    Tetrahedron,
+    Pyramid,
+    Prism
 }
